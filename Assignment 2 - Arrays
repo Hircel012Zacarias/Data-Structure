@@ -1,0 +1,1256 @@
+/*ASSIGNMENT 2 - ARRAYS*/
+
+/*1. Find the largest element*/
+#include <bits/stdc++.h> 
+int largestElement(vector<int> &arr, int n) {
+    return *max_element(arr.begin(), arr.end());
+}
+
+/*2. Check if the array is sorted*/
+#include <vector>
+using namespace std;
+
+int isSorted(int n, vector<int> &a) {
+    if (n <= 1) return 1;
+    
+    for (int i = 1; i < n; ++i) {
+        if (a[i] < a[i - 1]) {
+            return 0; 
+        }
+    }
+
+    return 1; 
+}
+
+
+/*3. Remove duplicates in place sorted array*/
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int removeDuplicates(vector<int> &arr);
+
+int main() {
+    vector<int> arr = {1, 2, 2, 2, 3};
+
+    int newLength = removeDuplicates(arr);
+
+    cout << "New length: " << newLength << endl;
+    cout << "Modified array: ";
+    for (int i = 0; i < newLength; ++i) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+
+/*4. Linear Search*/
+#include<stdio.h>
+
+int search(int arr[],int n,int num)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        if(arr[i]==num)
+        return i;
+    }
+    return -1;
+}
+int main()
+{
+    int arr[]={1,2,3,4,5};
+    int num = 4;
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int val = search(arr,n,num);
+    printf("%d",val);
+}
+
+
+/*5. Maximum consecutive*/
+
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+  public:
+    int findMaxConsecutiveOnes(vector < int > & nums) {
+      int cnt = 0;
+      int maxi = 0;
+      for (int i = 0; i < nums.size(); i++) {
+        if (nums[i] == 1) {
+          cnt++;
+        } else {
+          cnt = 0;
+        }
+
+        maxi = max(maxi, cnt);
+      }
+      return maxi;
+    }
+};
+
+int main() {
+  vector < int > nums = { 1, 1, 0, 1, 1, 1 };
+  Solution obj;
+  int ans = obj.findMaxConsecutiveOnes(nums);
+  cout << "The maximum  consecutive 1's are " << ans;
+  return 0;
+}
+
+
+/*6. Find the number that appears once and other numbers twice*/
+
+#include<vector>
+
+int getSingleElement(vector<int> &arr){
+	
+    int left = 0, right = arr.size() - 1;
+
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+
+        
+        if (mid % 2 == 1) {
+            mid--;
+        }
+
+        
+        if (arr[mid] == arr[mid + 1]) {
+            left = mid + 2;
+        } else {
+            right = mid;
+        }
+    }
+
+    return arr[left];
+}
+
+
+/*7. Longest subarray with sum K (positive or negative)*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int longestSubarrayWithSumK(vector<int> a, long long k) {
+    unordered_map<long long, int> m;
+    long long sum = 0;
+    int maxLen = 0;
+    
+    for (int i = 0; i < a.size(); i++) {
+        sum += a[i];
+        if (sum == k) maxLen = i + 1;
+        if (m.count(sum - k)) maxLen = max(maxLen, i - m[sum - k]);
+        if (!m.count(sum)) m[sum] = i;
+    }
+    
+    return maxLen;
+}
+
+
+/*8. Rearrange array element by sign*/
+#include<bits/stdc++.h>
+using namespace std;
+
+  vector<int> RearrangebySign(vector<int>A){
+    
+  int n = A.size();
+  vector<int> ans(n,0);
+  
+  int posIndex = 0, negIndex = 1;
+  for(int i = 0;i<n;i++){
+      
+      if(A[i]<0){
+          ans[negIndex] = A[i];
+          negIndex+=2;
+      }
+      
+      else{
+          ans[posIndex] = A[i];
+          posIndex+=2;
+      }
+  }
+  
+  return ans;
+    
+}
+
+int main() {
+  
+  vector<int> A = {1,2,-4,-5};
+
+  vector<int> ans = RearrangebySign(A);
+  
+  for (int i = 0; i < ans.size(); i++) {
+    cout << ans[i] << " ";
+  }
+
+  return 0;
+}
+
+
+/*9. Leaders in an array*/
+
+vector<int> superiorElements(vector<int>&a) {
+    vector<int> ans;
+    for(int i-0: i<n; i++){
+        bool leader=true;
+        for(int j=i+1; j<n; j++){
+            if(arr[j]> arr[i]){
+                leader=false;
+                break;
+            }
+        }
+    }
+    if(leader){
+        ans.push_bush(arr[i]);
+    }
+    return ans;
+}
+
+
+/*10. Spiral traversal of matrix*/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<int> printSpiral(vector<vector<int>> mat) {
+ 
+  vector<int> ans;
+ 
+  int n = mat.size(); 
+  int m = mat[0].size();
+  
+  int top = 0, left = 0, bottom = n - 1, right = m - 1;
+
+  while (top <= bottom && left <= right) {
+  
+    for (int i = left; i <= right; i++)
+      ans.push_back(mat[top][i]);
+
+    top++;
+    for (int i = top; i <= bottom; i++)
+      ans.push_back(mat[i][right]);
+
+    right--;
+    if (top <= bottom) {
+      for (int i = right; i >= left; i--)
+       ans.push_back(mat[bottom][i]);
+
+      bottom--;
+    }
+    if (left <= right) {
+      for (int i = bottom; i >= top; i--)
+        ans.push_back(mat[i][left]);
+
+      left++;
+    }
+  }
+  return ans;
+}
+
+int main() {
+  vector<vector<int>> mat   {{1, 2, 3, 4},
+                             {5, 6, 7, 8},
+	                         {9, 10, 11, 12},
+		                     {13, 14, 15, 16}};
+		                     
+  vector<int> ans = printSpiral(mat);
+
+  for(int i = 0;i<ans.size();i++){
+      
+      cout<<ans[i]<<" ";
+  }
+  
+  cout<<endl;
+  
+  return 0;
+}
+
+
+/*11. Count all subarray with the given sum */
+
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+
+using namespace std;
+
+int subarraySum(vector<int>& arr, int K) {
+    unordered_map<int, int> cumulative_sum_freq;
+    cumulative_sum_freq[0] = 1;  
+    int current_sum = 0;
+    int count = 0;
+    
+    for (int num : arr) {
+        current_sum += num;
+        
+        if (cumulative_sum_freq.find(current_sum - K) != cumulative_sum_freq.end()) {
+            count += cumulative_sum_freq[current_sum - K];
+        }
+        
+        cumulative_sum_freq[current_sum]++;
+    }
+    
+    return count;
+}
+
+int main() {
+    int T;
+    cin >> T;
+    
+    while (T--) {
+        int N, K;
+        cin >> N >> K;
+        vector<int> arr(N);
+        
+        for (int i = 0; i < N; ++i) {
+            cin >> arr[i];
+        }
+        
+        int result = subarraySum(arr, K);
+        cout << result << endl;
+    }
+    
+    return 0;
+}
+
+
+/*12. Majority element*/
+
+vector<int> majorityElement(vector<int> v) {
+	// Write your code here
+	int n = v.size(); 
+    vector<int> ls; 
+
+    for (int i = 0; i < n; i++) {
+        if (ls.size() == 0 || ls[0] != v[i]) {
+            int cnt = 0;
+            for (int j = 0; j < n; j++) {
+                if (v[j] == v[i]) {
+                    cnt++;
+                }
+            }
+
+            if (cnt > (n / 3))
+                ls.push_back(v[i]);
+        }
+
+        if (ls.size() == 2) break;
+    }
+
+    return ls;
+}
+
+
+/*13. Merge all overlapping sub-intervals*/
+
+#include<vector>
+
+vector<vector<int>> mergeOverlappingIntervals(vector<vector<int>> &arr){
+	int n = arr.size(); // size of the array
+
+    sort(arr.begin(), arr.end());
+
+    vector<vector<int>> ans;
+
+    for (int i = 0; i < n; i++) { 
+        int start = arr[i][0];
+        int end = arr[i][1];
+
+        if (!ans.empty() && end <= ans.back()[1]) {
+            continue;
+        }
+
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j][0] <= end) {
+                end = max(end, arr[j][1]);
+            }
+            else {
+                break;
+            }
+        }
+        ans.push_back({start, end});
+    }
+    return ans;
+	
+}
+
+/*14. Count inversions in an array*/
+
+int numberOfInversions(vector<int>&a, int n) {
+    int cnt = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (a[i] > a[j]) cnt++;
+        }
+    }
+    return cnt;
+}
+
+
+/*15. Count reverse pairs*/
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int countValidPairs(vector<int>& SKILL) {
+    int N = SKILL.size();
+    int count = 0;
+    sort(SKILL.begin(), SKILL.end());
+
+    for (int j = N - 1; j > 0; --j) {
+        int i = 0;
+        while (i < j) {
+            if (SKILL[i] > 2 * SKILL[j]) {
+                count += (j - i);
+                break;
+            } else {
+                ++i;
+            }
+        }
+    }
+    
+    return count;
+}
+
+int main() {
+    int N;
+    cin >> N;
+
+    vector<int> SKILL(N);
+    for (int i = 0; i < N; ++i) {
+        cin >> SKILL[i];
+    }
+
+    int result = countValidPairs(SKILL);
+    cout << result << endl;
+
+    return 0;
+}
+
+
+/*16. Subarray with maximum product*/
+
+
+#include<vector>
+
+int subarrayWithMaxProduct(vector<int> &arr){
+	// Write your code here.
+	int result = arr[0];
+    for(int i=0;i<arr.size()-1;i++) {
+        int p = arr[i];
+        for(int j=i+1;j<arr.size();j++) {
+           result = max(result,p);
+           p *= arr[j];
+        }
+        result = max(result,p); 
+    }
+    return result;
+}
+
+/*17. Zero matrix */
+
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> zeroMatrix(vector<vector<int>> &matrix, int n, int m) {
+    bool firstRowZero = false;
+    bool firstColZero = false;
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            if (matrix[i][j] == 0) {
+                
+                if (i == 0) firstRowZero = true;
+                if (j == 0) firstColZero = true;
+                matrix[i][0] = 0;
+                matrix[0][j] = 0;
+            }
+        }
+    }
+
+    for (int i = 1; i < n; ++i) {
+        for (int j = 1; j < m; ++j) {
+            if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                matrix[i][j] = 0;
+            }
+        }
+    }
+
+    if (firstRowZero) {
+        for (int j = 0; j < m; ++j) {
+            matrix[0][j] = 0;
+        }
+    }
+
+    if (firstColZero) {
+        for (int i = 0; i < n; ++i) {
+            matrix[i][0] = 0;
+        }
+    }
+
+    return matrix;
+}
+
+int main() {
+    int n = 3, m = 3;
+    vector<vector<int>> matrix = {
+        {1, 2, 3},
+        {4, 0, 6},
+        {7, 8, 9}
+    };
+
+    vector<vector<int>> result = zeroMatrix(matrix, n, m);
+
+    for (auto row : result) {
+        for (auto elem : row) {
+            cout << elem << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+
+/*18. Rotate matrix */
+
+#include <bits/stdc++.h>
+using namespace std;
+
+void rotateMatrix(vector<vector<int>> &mat, int n, int m)
+{
+  
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < m; ++j) {
+            swap(mat[i][j], mat[j][i]);
+        }
+    }
+
+    for (int i = 0; i < n; ++i) {
+        reverse(mat[i].begin(), mat[i].end());
+    }
+}
+
+int main() {
+    int n = 3, m = 3;
+    vector<vector<int>> mat = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
+
+    rotateMatrix(mat, n, m);
+
+    for (auto row : mat) {
+        for (auto elem : row) {
+            cout << elem << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+
+/*19. Find tripples that add up to a zero*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+void rotateMatrix(vector<vector<int>> &mat, int n, int m)
+{
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < m; ++j) {
+            swap(mat[i][j], mat[j][i]);
+        }
+    }
+
+    for (int i = 0; i < n; ++i) {
+        reverse(mat[i].begin(), mat[i].end());
+    }
+}
+
+int main() {
+    int n = 3, m = 3;
+    vector<vector<int>> mat = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
+
+    rotateMatrix(mat, n, m);
+
+    for (auto row : mat) {
+        for (auto elem : row) {
+            cout << elem << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+
+/*20. 4 sum, find quads that add up to a target value */
+
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> fourSum(vector<int>& nums, int target) {
+    vector<vector<int>> result;
+    sort(nums.begin(), nums.end());
+    int n = nums.size();
+    
+    for (int i = 0; i < n - 3; ++i) {
+       
+        if (i > 0 && nums[i] == nums[i - 1]) continue;
+        
+        for (int j = i + 1; j < n - 2; ++j) {
+            
+            if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+            
+            int left = j + 1;
+            int right = n - 1;
+            
+            while (left < right) {
+                long long sum = (long long)nums[i] + nums[j] + nums[left] + nums[right];
+                
+                if (sum == target) {
+                    result.push_back({nums[i], nums[j], nums[left], nums[right]});
+                    
+                    while (left < right && nums[left] == nums[left + 1]) ++left;
+                
+                    while (left < right && nums[right] == nums[right - 1]) --right;
+                    
+                    ++left;
+                    --right;
+                } else if (sum < target) {
+                    ++left;
+                } else {
+                    --right;
+                }
+            }
+        }
+    }
+    
+    return result;
+}
+
+int main() {
+    vector<int> nums = {1, 0, -1, 0, -2, 2};
+    int target = 0;
+    
+    vector<vector<int>> result = fourSum(nums, target);
+    
+    for (const auto& quadruplet : result) {
+        for (int num : quadruplet) {
+            cout << num << " ";
+        }
+        cout << endl;
+    }
+    
+    return 0;
+}
+
+
+/*21. Program to generate pascal's triangle */
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int nCr(int n, int r) {
+    long long res = 1;
+
+    for (int i = 0; i < r; i++) {
+        res = res * (n - i);
+        res = res / (i + 1);
+    }
+    return res;
+}
+
+int pascalTriangle(int r, int c) {
+    int element = nCr(r - 1, c - 1);
+    return element;
+}
+
+int main()
+{
+    int r = 5; 
+    int c = 3; 
+    int element = pascalTriangle(r, c);
+    cout << "The element at position (r,c) is: "
+            << element << "n";
+    return 0;
+}
+
+
+/*22. Find the majority element that occurs more than N/2 times */
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int majorityElement(vector<int> &v) {
+    int candidate = -1;
+    int count = 0;
+
+    for (int num : v) {
+        if (count == 0) {
+            candidate = num;
+        }
+        count += (num == candidate) ? 1 : -1;
+    }
+
+    count = 0;
+    for (int num : v) {
+        if (num == candidate) {
+            count++;
+        }
+    }
+    
+    if (count > v.size() / 2) {
+        return candidate;
+    } else {
+        throw runtime_error("No majority element");
+    }
+}
+
+int main() {
+    vector<int> v = {3, 3, 4, 2, 4, 4, 2, 4, 4};
+    
+    try {
+        int result = majorityElement(v);
+        cout << "Majority Element: " << result << endl;
+    } catch (const runtime_error &e) {
+        cout << e.what() << endl;
+    }
+
+    return 0;
+}
+
+
+/*23. Find the repeating and missing number*/
+        
+ #include <bits/stdc++.h>
+using namespace std;
+
+vector<int> findRepeatingAndMissing(vector<int> &a) {
+    int n = a.size();
+    
+  
+    long long sum_n = (long long)n * (n + 1) / 2;
+    long long sum_squares_n = (long long)n * (n + 1) * (2 * n + 1) / 6;
+    
+   
+    long long sum_a = 0;
+    long long sum_squares_a = 0;
+    
+    for (int num : a) {
+        sum_a += num;
+        sum_squares_a += (long long)num * num;
+    }
+    
+  
+    long long diff_sum = sum_n - sum_a; 
+    long long diff_squares = sum_squares_n - sum_squares_a; 
+    
+   
+    long long sum_mr = diff_sum; 
+    long long square_mr = diff_squares / diff_sum; 
+    long long missing = (sum_mr + square_mr) / 2;
+    long long repeating = missing - sum_mr;
+    
+    return { (int)repeating, (int)missing };
+}
+
+int main() {
+    vector<int> a = {1, 2, 3, 2};
+    
+    vector<int> result = findRepeatingAndMissing(a);
+    
+    cout << result[0] << " " << result[1] << endl;
+    
+    return 0;
+}
+       
+/*24. Merge two sorted arrays without extra space*/
+
+#include <iostream>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+int getGap(int gap) {
+    if (gap <= 1) return 0;
+    return (gap / 2) + (gap % 2);
+}
+
+void mergeTwoSortedArraysWithoutExtraSpace(vector<long long> &a, vector<long long> &b) {
+    int n1 = a.size();
+    int n2 = b.size();
+    
+    int gap = getGap(n1 + n2);
+    
+    while (gap > 0) {
+        
+        for (int i = 0; i + gap < n1; ++i) {
+            if (a[i] > a[i + gap]) {
+                swap(a[i], a[i + gap]);
+            }
+        }
+        
+        for (int i = 0, j = gap; j < n1; ++i, ++j) {
+            if (a[i] > b[j - n1]) {
+                swap(a[i], b[j - n1]);
+            }
+        }
+        
+        for (int i = 0; i + gap < n2; ++i) {
+            if (b[i] > b[i + gap]) {
+                swap(b[i], b[i + gap]);
+            }
+        }
+        
+        gap = getGap(gap);
+    }
+}
+
+int main() {
+    vector<long long> a = {1, 5, 9, 10, 15};
+    vector<long long> b = {2, 3, 8, 13};
+    
+    mergeTwoSortedArraysWithoutExtraSpace(a, b);
+    
+    cout << "Array a: ";
+    for (auto num : a) cout << num << " ";
+    cout << endl;
+    
+    cout << "Array b: ";
+    for (auto num : b) cout << num << " ";
+    cout << endl;
+    
+    return 0;
+}
+
+
+/*25. Move all zero's to end*/
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector<int> moveZeros(int n, vector<int> a) {
+    int index = 0;
+    
+    for (int i = 0; i < n; ++i) {
+        if (a[i] != 0) {
+            a[index++] = a[i];
+        }
+    }
+    
+    while (index < n) {
+        a[index++] = 0;
+    }
+    
+    return a;
+}
+
+int main() {
+    vector<int> a = {0, 1, 0, 3, 12};
+    
+    vector<int> result = moveZeros(a.size(), a);
+    
+    cout << "Array after moving zeros: ";
+    for (int num : result) {
+        cout << num << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}
+
+
+/*26. Longest Subarray With Sum K */
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int longestSubarrayWithSumK(vector<int> a, long long k) {
+    unordered_map<long long, int> m;
+    long long sum = 0;
+    int maxLen = 0;
+    
+    for (int i = 0; i < a.size(); i++) {
+        sum += a[i];
+        if (sum == k) maxLen = i + 1;
+        if (m.count(sum - k)) maxLen = max(maxLen, i - m[sum - k]);
+        if (!m.count(sum)) m[sum] = i;
+    }
+    
+    return maxLen;
+}
+
+
+/*27. Missing number*/
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int findMissingNumber(vector<int>& a, int n) {
+    
+    long long expected_sum = (long long)n * (n + 1) / 2;
+    
+   
+    long long actual_sum = 0;
+    for (int num : a) {
+        actual_sum += num;
+    }
+    
+    
+    return expected_sum - actual_sum;
+}
+
+int main() {
+    vector<int> a = {1, 2, 4, 5};
+    int n = 5;
+    
+    int missing_number = findMissingNumber(a, n);
+    cout << "The missing number is: " << missing_number << endl;
+    
+    return 0;
+}
+
+
+/*28. Union of two sorted arrays*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+vector < int > FindUnion(int arr1[], int arr2[], int n, int m) {
+  set < int > s;
+  vector < int > Union;
+  for (int i = 0; i < n; i++)
+    s.insert(arr1[i]);
+  for (int i = 0; i < m; i++)
+    s.insert(arr2[i]);
+  for (auto & it: s)
+    Union.push_back(it);
+  return Union;
+}
+
+int main()
+
+{
+  int n = 10, m = 7;
+  int arr1[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  int arr2[] = {2, 3, 4, 4, 5, 11, 12};
+  vector < int > Union = FindUnion(arr1, arr2, n, m);
+  cout << "Union of arr1 and arr2 is  " << endl;
+  for (auto & val: Union)
+    cout << val << " ";
+  return 0;
+}
+
+
+/*29. Sort an array of 0s, 1s and 2s*/
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int findMissingNumber(vector<int>& a, int n) {
+    
+    long long expected_sum = (long long)n * (n + 1) / 2;
+    
+    long long actual_sum = 0;
+    for (int num : a) {
+        actual_sum += num;
+    }
+    
+    return expected_sum - actual_sum;
+}
+
+int main() {
+    vector<int> a = {1, 2, 4, 5};
+    int n = 5;
+    
+    int missing_number = findMissingNumber(a, n);
+    cout << "The missing number is: " << missing_number << endl;
+    
+    return 0;
+}
+
+
+/*30. Maximum Subarray Sum  */
+
+#include <iostream>
+#include <vector>
+#include <algorithm> 
+
+using namespace std;
+
+long long maxSubarraySum(vector<int> arr, int n) {
+    if (n == 0) return 0; 
+
+    long long max_current = arr[0];
+    long long max_global = arr[0];
+
+    for (int i = 1; i < n; ++i) {
+        max_current = max(static_cast<long long>(arr[i]), max_current + arr[i]);
+        max_global = max(max_global, max_current);
+    }
+
+    return max_global;
+}
+
+int main() {
+    vector<int> arr = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+    int n = arr.size();
+    
+    cout << "Maximum subarray sum is: " << maxSubarraySum(arr, n) << endl;
+    
+    return 0;
+}
+
+
+/*31. Best Time to Buy and Sell Stock */
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int maximumProfit(vector<int> &prices) {
+    if (prices.empty()) return 0; 
+    int min_price = INT_MAX; 
+    int max_profit = 0; 
+
+    for (int price : prices) {
+        if (price < min_price) {
+            min_price = price; 
+        } else {
+            max_profit = max(max_profit, price - min_price); 
+        }
+    }
+
+    return max_profit;
+}
+
+int main() {
+    vector<int> prices = {7, 1, 5, 3, 6, 4};
+    
+    cout << "Maximum profit is: " << maximumProfit(prices) << endl;
+    
+    return 0;
+}
+
+
+/*32. Rotate array by K elements*/
+
+#include <iostream>
+using namespace std;
+void Rotatetoright(int arr[], int n, int k)
+{
+  if (n == 0)
+    return;
+  k = k % n;
+  if (k > n)
+    return;
+  int temp[k];
+  for (int i = n - k; i < n; i++)
+  {
+    temp[i - n + k] = arr[i];
+  }
+  for (int i = n - k - 1; i >= 0; i--)
+  {
+    arr[i + k] = arr[i];
+  }
+  for (int i = 0; i < k; i++)
+  {
+    arr[i] = temp[i];
+  }
+}
+int main()
+{
+  int n = 7;
+  int arr[] = {1, 2, 3, 4, 5, 6, 7};
+  int k = 2;
+  Rotatetoright(arr, n, k);
+  cout << "After Rotating the elements to right " << endl;
+  for (int i = 0; i < n; i++)
+  {
+    cout << arr[i] << " ";
+  }
+  return 0;
+}
+
+
+/*33. Union of two sorted arrays*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+vector < int > FindUnion(int arr1[], int arr2[], int n, int m) {
+  map < int, int > freq;
+  vector < int > Union;
+  for (int i = 0; i < n; i++)
+    freq[arr1[i]]++;
+  for (int i = 0; i < m; i++)
+    freq[arr2[i]]++;
+  for (auto & it: freq)
+    Union.push_back(it.first);
+  return Union;
+}
+
+int main() {
+  int n = 10, m = 7;
+  int arr1[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  int arr2[] = {2, 3, 4, 4, 5, 11, 12};
+  vector < int > Union = FindUnion(arr1, arr2, n, m);
+  cout << "Union of arr1 and arr2 is " << endl;
+  for (auto & val: Union)
+    cout << val << " ";
+  return 0;
+}
+
+
+/*34. Rearrange array element by sign*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+  vector<int> RearrangebySign(vector<int>A, int n){
+  vector<int> pos;
+  vector<int> neg;
+  
+  for(int i=0;i<n;i++){
+      
+      if(A[i]>0) pos.push_back(A[i]);
+      else neg.push_back(A[i]);
+  }
+  
+  for(int i=0;i<n/2;i++){
+      
+      A[2*i] = pos[i];
+      A[2*i+1] = neg[i];
+  }
+  
+  return A;
+    
+}
+
+int main() {
+    
+  int n = 4;
+  vector<int> A {1,2,-4,-5};
+
+  vector<int> ans = RearrangebySign(A,n);
+  
+  for (int i = 0; i < ans.size(); i++) {
+    cout << ans[i] << " ";
+  }
+
+  return 0;
+}
+
+
+/*35. Next permutation*/
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+
+int main() {
+    int arr[] = {1,3,2};
+    
+    next_permutation(arr,arr+3);//using in-built function of C++
+    
+    cout<<arr[0]<<" "<<arr[1]<<" "<<arr[2];
+    
+    return 0;
+}
+
+/*36. Pascal'S triangle*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int nCr(int n, int r) {
+    long long res = 1;
+
+    for (int i = 0; i < r; i++) {
+        res = res * (n - i);
+        res = res / (i + 1);
+    }
+    return res;
+}
+
+int pascalTriangle(int r, int c) {
+    int element = nCr(r - 1, c - 1);
+    return element;
+}
+
+int main()
+{
+    int r = 5; 
+    int c = 3; 
+    int element = pascalTriangle(r, c);
+    cout << "The element at position (r,c) is: "
+            << element << "n";
+    return 0;
+}
+
+
+/*37. Pascal's triangle*/
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int nCr(int n, int r) {
+    long long res = 1;
+
+   
+    for (int i = 0; i < r; i++) {
+        res = res * (n - i);
+        res = res / (i + 1);
+    }
+    return res;
+}
+
+int pascalTriangle(int r, int c) {
+    int element = nCr(r - 1, c - 1);
+    return element;
+}
+
+int main()
+{
+    int r = 5; 
+    int c = 3; 
+    int element = pascalTriangle(r, c);
+    cout << "The element at position (r,c) is: "
+            << element << "n";
+    return 0;
+}
+   
+
+
+
+
+
+
+
+
+
+
+
+
